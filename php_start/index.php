@@ -6,5 +6,5 @@
 	{
 		echo Database::$assoc["email"] . "<br/>";
 	}
-	Page($_GET["page"]);
+	Page((isset($_GET["page"]) ? $_GET["page"] : "home"));
 ?>
