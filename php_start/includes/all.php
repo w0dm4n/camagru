@@ -8,6 +8,7 @@
 /* CLASS */
 
 Database::StartConnection($DB_DSN, $DB_USER, $DB_PASSWORD);
+Database::Query("SET NAMES UTF8");
 
 /* FUNCTIONS */
 	require_once("functions/page.php");
