@@ -1,4 +1,3 @@
-
 body {
 	background-image: url(img/body-bg8_360.png);
 	font-size: 100%;
@@ -7,7 +6,7 @@ body {
 #Centre {
 	background-color: #FFF;
 	width: 1400px;
-	height: 1085px;
+	height: 1120px;
 	border: solid black 1px; 
 	border-radius: 3px;
 }
@@ -16,15 +15,16 @@ body {
 	width: 99%;
 	height: 80px;
 	border: solid black 1px;
+	margin-bottom:20px;
 }
-
+​
 #Centre h1 {
 	text-align: left;
 	color: #CCC;
 	text-shadow: 1px 1px black;
 	margin-left: 50px;
 }
-#footer, .left, .right, .header {
+#footer, .left, .right, .header, .middle {
 	background-image: url(img/body-bg7_360.png);
 	border-radius: 5px;
 }
@@ -94,6 +94,7 @@ img[value="2"] {
 	border: black solid 1px;
 }
 #historique {
+	background-color: #FFFFFF;
 	border: black solid 1px;
 	margin-top: 10px;
 	width: 660px;
@@ -112,13 +113,27 @@ img[value="2"] {
 	margin-left: 10px;
 	margin-bottom: 5px;
 }
+.middle {
+	border: solid black 1px;
+	width: 1360px;
+	height: 900px;
+}
 #footer {
 	width: 99%;
 	height: 80px;
-	margin-top: 5px;
+	margin-top: 20px;
 	border: black solid 1px;
 }
-@media screen and (max-width: 1300px) {
+.copyright {
+	padding-top: 30px;
+}
+.button {
+	display: inline-block;
+	position: absolute;
+	margin-top: 30px;
+	margin-left: -610px;
+}
+@media screen and (max-width: 1400px) {
 	.useless img[value="1"] {
 		display: none;
 	}
@@ -131,12 +146,12 @@ img[value="2"] {
 	}
 	#Centre {
 		width: 700px;
-		height: 1700px;
+		height: 1734px;
 		border: solid black 1px; 
 		border-radius: 3px;
 	}
 	.left {
-
+​		display: block;
 		float: none;
 		display: block;
 		width: 680px;
@@ -147,14 +162,24 @@ img[value="2"] {
 		margin-top: 10px;
 	}
 	.right {
-		display: block;
 		width: 680px;
 		height: 900px;
-		border: solid green 1px;
+		border: solid red 1px;
 	}
 	.useless {
 		display: block;
 		width: 10px;
 		height: 10px;
+	}
+	.middle {
+		border: solid black 1px;
+		width: 680px;
+		height: 1520px;
+	}
+	.button {
+		display: inline-block;
+		position: absolute;
+		margin-top: 30px;
+		margin-left: -265px;
 	}
 }
