@@ -24,9 +24,9 @@ body {
 	text-shadow: 1px 1px black;
 	margin-left: 50px;
 }
-#footer, .left, .right, .header, .middle {
+#footer, .left, .right, .header, .middle, .middle_galerie {
 	background-image: url(img/body-bg7_360.png);
-	border-radius: 5px;
+	border-radius: 3px;
 }
 .left {
 	margin-left: 5px;
@@ -59,8 +59,8 @@ img[value="2"] {
 	height: 900px;
 	border: solid green 1px;
 }
-#video, #canvas {
-	border-radius: 5px;
+#video, #canvas, #galerie, .img_gal {
+	border-radius: 3px;
 }
 #video {
 	margin-top: 140px;
@@ -113,10 +113,14 @@ img[value="2"] {
 	margin-left: 10px;
 	margin-bottom: 5px;
 }
-.middle {
+.middle, .middle_galerie{
 	border: solid black 1px;
 	width: 1360px;
 	height: 900px;
+}
+.middle_galerie {
+	overflow-x: hidden;
+	overflow-y: scroll; 
 }
 #footer {
 	width: 99%;
@@ -132,6 +136,25 @@ img[value="2"] {
 	position: absolute;
 	margin-top: 30px;
 	margin-left: -610px;
+}
+#galerie {
+	background-color: #FFF;
+	align: left;
+	display: inline-block;
+	width: 640px;
+	height: 510px;
+	margin-top: 15px;
+	margin-left: 15px;
+	border: 1px solid black;
+	margin-bottom: 15px;
+
+}
+.img_gal {
+	width: 640px;
+	height: 480px;
+}
+#comment_img {
+	
 }
 @media screen and (max-width: 1400px) {
 	.useless img[value="1"] {
@@ -171,15 +194,26 @@ img[value="2"] {
 		width: 10px;
 		height: 10px;
 	}
-	.middle {
+	.middle, .middle_galerie{
 		border: solid black 1px;
 		width: 680px;
 		height: 1520px;
+	}
+	.middle_galerie {
+		overflow-x: hidden;
+		overflow-y: scroll; 
 	}
 	.button {
 		display: inline-block;
 		position: absolute;
 		margin-top: 30px;
 		margin-left: -265px;
+	}
+	#galerie {
+		width: 640px;
+		height: 510px;
+		margin-left: 0px;
+		margin-top: 15px;
+		border: 1px solid black;
 	}
 }
