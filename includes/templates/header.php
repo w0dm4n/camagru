@@ -9,20 +9,20 @@ echo '<html>
 		<center>
 			<div id="Centre">
 				<div class="header">
-                    <form class="button">
-                        <a href="?page=gallery"><input style="width: 110px; height: 60px; font-size: 100px;" type="button" value="Galerie"></input></a>
+                   <form class="button">
+                        <ul><li><a href="?page=gallery"><br/><br/>Galerie</a></li></ul>
                     </form>
 					<h1 style="display: inline-block;">Camagru</h1>
-                    <form style="text-align: right; margin-top: -50px; margin-right: 15px;">';
+                    <form style="text-align: right; margin-top: -95px;">';
                     if (empty($_SESSION["email"]))
                     {
-                       echo '<a href="?page=login"><input style="width: 110px; height: 60px; font-size: 100px;" type="button" value="Connexion"></input></a>
-                       <a href="?page=register"><input style="width: 110px; height: 60px; font-size: 100px;" type="button" value="Inscription"></input></a>';
+                       echo '<ul><li><a href="?page=login"><br/><br/>Connexion</a></li></ul>
+                             <ul><li><a href="?page=register"><br/><br/>Inscription</a></li></ul>';
                   	}
                   	else
                   	{
-                  		echo '<a href="?page=upload"><input style="width: 110px; height: 60px; font-size: 100px;" type="button" value="Ajouter"></input></a>
-                  		<a href="?page=logout"><input style="width: 110px; height: 60px; font-size: 100px;" type="button" value="Déconnexion"></input></a>';
+                  		echo '<ul><li><a href="?page=upload"><br/><br/>Ajouter</a></li></ul>
+                  		      <ul><li><a href="?page=logout"><br/><br/>Déconnexion</a></li></ul>';
              		}
                   echo '</form>
 						</div>';

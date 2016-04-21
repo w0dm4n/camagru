@@ -59,15 +59,16 @@ img[value="2"] {
 	height: 900px;
 	border: solid green 1px;
 }
-#video, #canvas, #galerie, .img_gal {
+#video, #canvas, #galerie, .img_gal, .img_comment {
 	border-radius: 3px;
 }
 #video {
 	margin-top: 140px;
 }
 #snap {
+	display: inline-block;
 	margin-top: 20px;
-	width: 640px;
+	width: 315px;
 	height: 60px;
 }
 .picture {
@@ -131,11 +132,39 @@ img[value="2"] {
 .copyright {
 	padding-top: 30px;
 }
+ul {
+	padding-left: 1px;	
+	list-style-type: none;
+	text-align: center;
+	display: inline-block;
+}
+li {
+	float: left;
+	margin: auto;
+}
+li > a {
+	display: block;
+	color: black;
+	text-decoration: none;
+	text-align: center;
+	width: 150px;
+	height: 80px;
+}
+li > a:hover {
+	background-color: white;
+}
+li:hover > ul {
+	display: flex;
+}
+li > ul {
+	display: none;
+}
+
 .button {
 	display: inline-block;
 	position: absolute;
-	margin-top: 30px;
-	margin-left: -610px;
+	margin-top: -16px;
+	margin-left: -624px;
 }
 #galerie {
 	background-color: #FFF;
@@ -153,8 +182,9 @@ img[value="2"] {
 	width: 640px;
 	height: 480px;
 }
-#comment_img {
-	
+.img_comment {
+	width: 700px;
+	height: 520px;
 }
 @media screen and (max-width: 1400px) {
 	.useless img[value="1"] {
@@ -206,8 +236,12 @@ img[value="2"] {
 	.button {
 		display: inline-block;
 		position: absolute;
-		margin-top: 30px;
-		margin-left: -265px;
+		margin-top: -16px;
+		margin-left: -278px;
+	}
+	li > a {
+		width: 120px;
+		height: 80px;
 	}
 	#galerie {
 		width: 640px;
@@ -215,5 +249,9 @@ img[value="2"] {
 		margin-left: 0px;
 		margin-top: 15px;
 		border: 1px solid black;
+	}
+	.img_comment {
+		width: 640px;
+		height: 480px;
 	}
 }
