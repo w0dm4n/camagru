@@ -88,7 +88,7 @@ if (isset($_POST['save']))
     if (!empty($_SESSION["email"]))
     { 
      echo '<div class="left">
-                    <!--<video id="video" width="640" height="480" autoplay ></video>-->
+                    <video id="video" width="640" height="480" autoplay ></video>
                     <button id="snap"><h1 style="text-align: center; color: black;">SMILE !</h1></button><br/><br/>
                     <form method="post" enctype="multipart/form-data">
                             <input type="hidden" name="MAX_FILE_SIZE" value="1655000" /> 
