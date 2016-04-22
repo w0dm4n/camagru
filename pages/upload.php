@@ -7,27 +7,51 @@ if (isset($_POST['save']))
        {
             if ($_FILES["background_camera"]["size"] <= 1655000)
             {
-                echo "OK";
+                $extension = explode('.', $_FILES["background_camera"]["name"]);
+                $extension = strtolower($extension[1]);
+                if (check_extension($extension))
+                {
+                    $path = 'uploads/' . randomKey(100) . "." . $extension;
+                    move_uploaded_file($_FILES['background_camera']['tmp_name'], $path);
+                    if (!empty($_POST["texture"]))
+                    {
+                        $texture = $_POST['texture'];
+                        $texture = explode(";", $texture);
+                        $im = imagecreatefrompng($path);
+                        $i = 100;
+                        foreach($texture as $t)
+                        {
+                            $split = explode(",", $t);
+                            Database::Query('SELECT * FROM images WHERE id = "'.$split[0].'"');
+                            Database::Fetch_Assoc(NULL);
+                            file_put_contents('uploads/tmp.png', base64_decode(Database::$assoc['image_base64']));
+                            imagecopy($im, imagecreatefrompng('uploads/tmp.png'), (100 + $i), (200 + $i), 0, 0, imagesx(imagecreatefrompng('uploads/tmp.png')), imagesy(imagecreatefrompng('uploads/tmp.png')));
+                            $i += 100;
+                        }
+                        imagepng($im, $path, 0);
+                        unlink("uploads/tmp.png");
+                        Database::Query('INSERT INTO gallery(image_path,author,like_img,dontlike_img,date_creation) VALUES("'.$path.'", "'.$_SESSION["email"].'", "0", "0", "'.date('Y-m-d H:i:s').'") ');
+                        print_message("Votre image a bien été sauvegarder !", "success");
+                    }
+                    else
+                    {
+                        Database::Query('INSERT INTO gallery(image_path,author,like_img,dontlike_img,date_creation) VALUES("'.$path.'", "'.$_SESSION["email"].'", "0", "0", "'.date('Y-m-d H:i:s').'") ');
+                        print_message("Votre image a bien été sauvegarder !", "success");
+                    }
+                }
+                else
+                    print_message("Une erreur est survenue, merci de réessayer avec une autre image", "error");
             }
             else
-            {
-                // img trop grande
-            }
+                print_message("Votre image est trop lourde, merci d'en upload une de moin de 1.5 Mo", "error");
        }
+       else
+            print_message("Une erreur est survenue, merci de réessayer avec une autre image", "error");
     }
     else
     {
         echo $_POST["background_image"];
     }
-    /*$background = $_POST['background'];
-    $texture = $_POST['texture'];
-    $texture = explode(";", $texture);
-    foreach($texture as $t)
-    {
-        $split = explode(",", $t);
-        echo 'ID ['.$split[0].'], Y ['.$split[1].'] X ['.$split[2].']';
-        echo "</br>";
-    }*/
 }
     if (!empty($_SESSION["email"]))
     { 
@@ -63,20 +87,18 @@ if (isset($_POST['save']))
                         }
                    }
                    echo '</div>
-                    <div id="historique">
-                        <div id="photo">
-                            <img src="img/imgres.jpg" height="190" width="200"/>
-                        </div>   
-                        <div id="photo">
-                            <img src="img/imgres.jpg" height="190" width="200"/>
-                        </div>
-                        <div id="photo">
-                            <img src="img/imgres.jpg" height="190" width="200"/>
-                        </div>
-                        <div id="photo">
-                            <img src="img/imgres.jpg" height="190" width="200"/>
-                        </div>                 
-                    </div>
+                    <div id="historique">';
+                    Database::Query('SELECT * FROM gallery WHERE author = "'.$_SESSION['email'].'" ORDER BY date_creation DESC');
+                    if (Database::Get_Rows(NULL))
+                    {
+                        while (Database::Fetch_Assoc(NULL))
+                        {
+                            echo '<div id="photo">
+                                     <img src="'.Database::$assoc['image_path'].'" height="190" width="200"/>
+                                  </div>';
+                        }
+                    }               
+                    echo '</div>
                 </div>';
         }
         else
