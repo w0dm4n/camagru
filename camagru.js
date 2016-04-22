@@ -138,9 +138,9 @@
 			if (obj_name != "object_0")
 			{
 				if (document.getElementById("texture").value == "")
-					document.getElementById("texture").value += obj_name.split("_")[1] + "," + (cursor_y - canvas.getBoundingClientRect().top) + "," + (cursor_x - canvas.getBoundingClientRect().left);
+					document.getElementById("texture").value += obj_name.split("_")[1] + "," + Math.round(cursor_y - canvas.getBoundingClientRect().top) + "," + Math.round(cursor_x - canvas.getBoundingClientRect().left);
 				else
-					document.getElementById("texture").value += ";" + obj_name.split("_")[1] + "," + cursor_y + "," + cursor_x;
+					document.getElementById("texture").value += ";" + obj_name.split("_")[1] + "," + Math.round(cursor_y - canvas.getBoundingClientRect().top) + "," + Math.round(cursor_x - canvas.getBoundingClientRect().left);
 				cheeze(canvas, document.getElementById(obj_name), context, (x_mg - canvas.getBoundingClientRect().left) - (document.getElementById(obj_name).width / 2), ((y_mg - canvas.getBoundingClientRect().top) -  document.body.scrollTop) - (document.getElementById(obj_name).height / 2), document.getElementById(obj_name).height, document.getElementById(obj_name).width, false);
 				if (debug == true)
 				{

@@ -1,17 +1,4 @@
 <?php
-function ak_img_resize($target, $newcopy, $w, $h, $ext) {
-    list($w_orig, $h_orig) = getimagesize($target);
-    $ext = strtolower($ext);
-    if ($ext == "gif")
-        $img = imagecreatefromgif($target);
-    else if($ext =="png")
-         $img = imagecreatefrompng($target);
-    else
-         $img = imagecreatefromjpeg($target);
-    $tci = imagecreatetruecolor($w, $h);
-    imagecopyresampled($tci, $img, 0, 0, 0, 0, $w, $h, $w_orig, $h_orig);
-    imagejpeg($tci, $newcopy, 80);
-}
 if (isset($_POST['save']))
 {
     if (!empty($_FILES["background_camera"]["name"]))
@@ -26,20 +13,24 @@ if (isset($_POST['save']))
                 {
                     $path = 'uploads/' . randomKey(100) . "." . $extension;
                     move_uploaded_file($_FILES['background_camera']['tmp_name'], $path);
-                    ak_img_resize($path, $path, 640, 480, $extension);
+                    ResizeImage($path, $path, 640, 480, $extension);
                     if (!empty($_POST["texture"]))
                     {
                         $texture = $_POST['texture'];
                         $texture = explode(";", $texture);
-                        $im = imagecreatefromjpeg($path);
+                        if ($extension == "gif")
+                            $im = imagecreatefromgif($path);
+                        else if($extension == "png")
+                             $im = imagecreatefrompng($path);
+                        else
+                             $im = imagecreatefromjpeg($path);
                         foreach($texture as $t)
                         {
                             $split = explode(",", $t);
                             Database::Query('SELECT * FROM images WHERE id = "'.$split[0].'"');
                             Database::Fetch_Assoc(NULL);
                             file_put_contents('uploads/tmp.png', base64_decode(Database::$assoc['image_base64']));
-                            imagecopy($im, imagecreatefrompng('uploads/tmp.png'), $split[1], $split[2], 0, 0, imagesx(imagecreatefrompng('uploads/tmp.png')), imagesy(imagecreatefrompng('uploads/tmp.png')));
-                            echo $split[1] . ":" . $split[2] . "<br/>";
+                            imagecopy($im, imagecreatefrompng('uploads/tmp.png'), $split[2] - 50, $split[1] - 50, 0, 0, imagesx(imagecreatefrompng('uploads/tmp.png')), imagesy(imagecreatefrompng('uploads/tmp.png')));
                         }
                         imagepng($im, $path, 0);
                         unlink("uploads/tmp.png");
@@ -63,13 +54,41 @@ if (isset($_POST['save']))
     }
     else
     {
-        echo $_POST["background_image"];
+        $path = 'uploads/' . randomKey(100) . "." . "png";
+        file_put_contents($path, base64_decode($_POST["background_image"]));
+        $background = imagecreatefromstring(base64_decode($_POST["background_image"]));
+        ResizeImage($path, $path, 640, 480, "png");
+        if (!empty($_POST["texture"]))
+        {
+            $texture = $_POST['texture'];
+            $texture = explode(";", $texture);
+            $im = imagecreatefromjpeg($path);
+            foreach($texture as $t)
+            {
+                $split = explode(",", $t);
+                Database::Query('SELECT * FROM images WHERE id = "'.$split[0].'"');
+                Database::Fetch_Assoc(NULL);
+                file_put_contents('uploads/tmp.png', base64_decode(Database::$assoc['image_base64']));
+                imagecopy($im, imagecreatefrompng('uploads/tmp.png'), $split[2] - 50, $split[1] - 50, 0, 0, imagesx(imagecreatefrompng('uploads/tmp.png')), imagesy(imagecreatefrompng('uploads/tmp.png')));
+                echo $split[1] . ":" . $split[2] . "<br/>";
+            }
+             imagepng($im, $path, 0);
+             unlink("uploads/tmp.png");
+             Database::Query('INSERT INTO gallery(image_path,author,like_img,dontlike_img,date_creation) VALUES("'.$path.'", "'.$_SESSION["email"].'", "0", "0", "'.date('Y-m-d H:i:s').'") ');
+             print_message("Votre image a bien été sauvegarder !", "success");
+            }
+            else
+            {
+                  Database::Query('INSERT INTO gallery(image_path,author,like_img,dontlike_img,date_creation) VALUES("'.$path.'", "'.$_SESSION["email"].'", "0", "0", "'.date('Y-m-d H:i:s').'") ');
+                  print_message("Votre image a bien été sauvegarder !", "success");
+            }
+        
     }
 }
     if (!empty($_SESSION["email"]))
     { 
      echo '<div class="left">
-                    <video id="video" width="640" height="480" autoplay ></video>
+                    <!--<video id="video" width="640" height="480" autoplay ></video>-->
                     <button id="snap"><h1 style="text-align: center; color: black;">SMILE !</h1></button><br/><br/>
                     <form method="post" enctype="multipart/form-data">
                             <input type="hidden" name="MAX_FILE_SIZE" value="1655000" /> 

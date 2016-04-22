@@ -8,7 +8,8 @@ class Database
 	public static function StartConnection($DB_DSN, $DB_USER, $DB_PASSWORD)
 	{
 		try { self::$connection = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD); 
-		      self::$connection->query("SET NAMES UTF8");        }
+		      self::$connection->query("SET NAMES UTF8");        
+		  	  self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);								      }
 		catch (PDOException $error) { die('<center><span style="color:red"><i>'.$error->getMessage().'</i></span></center>'); }
 	}
 	public static function StopConnection() { self::$connection = NULL; }

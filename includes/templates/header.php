@@ -12,8 +12,8 @@ echo '<html>
                    <form class="button">
                         <ul><li><a href="?page=gallery"><br/><br/>Galerie</a></li></ul>
                     </form>
-					<h1 style="display: inline-block;">Camagru</h1>
-                    <form style="text-align: right; margin-top: -95px;">';
+					       <img style="position:absolute;margin-left:-105px;margin-top:15px;max-height:200px;max-width:200px;" src="img/logo.png"/>
+                    <form style="text-align: right; margin-top: -16px;">';
                     if (empty($_SESSION["email"]))
                     {
                        echo '<ul><li><a href="?page=login"><br/><br/>Connexion</a></li></ul>

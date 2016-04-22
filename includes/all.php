@@ -11,6 +11,7 @@
 Database::StartConnection($DB_DSN, $DB_USER, $DB_PASSWORD);
 
 /* FUNCTIONS */
+	require_once("functions/resize_image.php");
 	require_once("functions/page.php");
 	require_once("functions/print.php");
 	require_once("functions/redirect.php");
