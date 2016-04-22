@@ -1,4 +1,17 @@
 <?php
+function ak_img_resize($target, $newcopy, $w, $h, $ext) {
+    list($w_orig, $h_orig) = getimagesize($target);
+    $ext = strtolower($ext);
+    if ($ext == "gif")
+        $img = imagecreatefromgif($target);
+    else if($ext =="png")
+         $img = imagecreatefrompng($target);
+    else
+         $img = imagecreatefromjpeg($target);
+    $tci = imagecreatetruecolor($w, $h);
+    imagecopyresampled($tci, $img, 0, 0, 0, 0, $w, $h, $w_orig, $h_orig);
+    imagejpeg($tci, $newcopy, 80);
+}
 if (isset($_POST['save']))
 {
     if (!empty($_FILES["background_camera"]["name"]))
@@ -13,20 +26,20 @@ if (isset($_POST['save']))
                 {
                     $path = 'uploads/' . randomKey(100) . "." . $extension;
                     move_uploaded_file($_FILES['background_camera']['tmp_name'], $path);
+                    ak_img_resize($path, $path, 640, 480, $extension);
                     if (!empty($_POST["texture"]))
                     {
                         $texture = $_POST['texture'];
                         $texture = explode(";", $texture);
-                        $im = imagecreatefrompng($path);
-                        $i = 100;
+                        $im = imagecreatefromjpeg($path);
                         foreach($texture as $t)
                         {
                             $split = explode(",", $t);
                             Database::Query('SELECT * FROM images WHERE id = "'.$split[0].'"');
                             Database::Fetch_Assoc(NULL);
                             file_put_contents('uploads/tmp.png', base64_decode(Database::$assoc['image_base64']));
-                            imagecopy($im, imagecreatefrompng('uploads/tmp.png'), (100 + $i), (200 + $i), 0, 0, imagesx(imagecreatefrompng('uploads/tmp.png')), imagesy(imagecreatefrompng('uploads/tmp.png')));
-                            $i += 100;
+                            imagecopy($im, imagecreatefrompng('uploads/tmp.png'), $split[1], $split[2], 0, 0, imagesx(imagecreatefrompng('uploads/tmp.png')), imagesy(imagecreatefrompng('uploads/tmp.png')));
+                            echo $split[1] . ":" . $split[2] . "<br/>";
                         }
                         imagepng($im, $path, 0);
                         unlink("uploads/tmp.png");
