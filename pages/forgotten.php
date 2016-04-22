@@ -12,6 +12,7 @@
 					$hash = randomKey(255);
 					print_message("Un email de réinitialisation de mot de passe vous a été envoyé !", "success");
 					Database::Query('INSERT INTO reset(email,hash) VALUES("'.$email.'", "'.$hash.'")');
+					Database::Query('SELECT * FROM accounts WHERE email = "'.$email.'"');
 					Database::Fetch_Assoc(NULL);
 					SendEmail($email, Database::$assoc["username"], "reset", $hash);
 				}

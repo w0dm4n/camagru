@@ -115,7 +115,7 @@
 		var mouse_double_clic = false;
 		var x_mg = 0;
 		var y_mg = 0;
-		for (i = 1; i < 100; i++)
+		for (i = 1; i < 1000; i++)
 		{
 			if (document.getElementById("object_" + i))
 			{

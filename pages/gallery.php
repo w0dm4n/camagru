@@ -47,7 +47,7 @@
 				while (Database::Fetch_Assoc(NULL))
 				{
 					 echo '<div id="galerie">
-							<a href=""><img class="img_gal" src="'.Database::$assoc["image_path"].'" /></a>
+							<a href="?page=comment&id='.Database::$assoc["id"].'"><img class="img_gal" src="'.Database::$assoc["image_path"].'" /></a>
 							<form style="text-align: right; margin-right: 10px; margin-top: 6px;">
 							<br/>
 							<a href="" style="text-decoration: none;"><font style="margin-right: 570px; margin-top: -20px; text-decoration: none; display: inline-block;"><a style="text-decoration:none;" href="?page=gallery&action=like&id='.Database::$assoc["id"].'"> &#128077</a> '.Database::$assoc["like_img"].'</font></a>
@@ -56,6 +56,7 @@
 						</div>';
 				}
 				echo '</div>';
+				echo '<br/><a href="">1</a> | <a href="">2</a>';
 			}
 			else
 			{

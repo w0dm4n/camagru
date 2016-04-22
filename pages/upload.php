@@ -54,35 +54,38 @@ if (isset($_POST['save']))
     }
     else
     {
-        $path = 'uploads/' . randomKey(100) . "." . "png";
-        file_put_contents($path, base64_decode($_POST["background_image"]));
-        $background = imagecreatefromstring(base64_decode($_POST["background_image"]));
-        ResizeImage($path, $path, 640, 480, "png");
-        if (!empty($_POST["texture"]))
+        if (!empty($_POST["background_image"]))
         {
-            $texture = $_POST['texture'];
-            $texture = explode(";", $texture);
-            $im = imagecreatefromjpeg($path);
-            foreach($texture as $t)
+            $path = 'uploads/' . randomKey(100) . "." . "png";
+            file_put_contents($path, base64_decode($_POST["background_image"]));
+            $background = imagecreatefromstring(base64_decode($_POST["background_image"]));
+            ResizeImage($path, $path, 640, 480, "png");
+            if (!empty($_POST["texture"]))
             {
-                $split = explode(",", $t);
-                Database::Query('SELECT * FROM images WHERE id = "'.$split[0].'"');
-                Database::Fetch_Assoc(NULL);
-                file_put_contents('uploads/tmp.png', base64_decode(Database::$assoc['image_base64']));
-                imagecopy($im, imagecreatefrompng('uploads/tmp.png'), $split[2] - 50, $split[1] - 50, 0, 0, imagesx(imagecreatefrompng('uploads/tmp.png')), imagesy(imagecreatefrompng('uploads/tmp.png')));
-                echo $split[1] . ":" . $split[2] . "<br/>";
-            }
-             imagepng($im, $path, 0);
-             unlink("uploads/tmp.png");
-             Database::Query('INSERT INTO gallery(image_path,author,like_img,dontlike_img,date_creation) VALUES("'.$path.'", "'.$_SESSION["email"].'", "0", "0", "'.date('Y-m-d H:i:s').'") ');
-             print_message("Votre image a bien été sauvegarder !", "success");
-            }
-            else
-            {
-                  Database::Query('INSERT INTO gallery(image_path,author,like_img,dontlike_img,date_creation) VALUES("'.$path.'", "'.$_SESSION["email"].'", "0", "0", "'.date('Y-m-d H:i:s').'") ');
-                  print_message("Votre image a bien été sauvegarder !", "success");
-            }
-        
+                $texture = $_POST['texture'];
+                $texture = explode(";", $texture);
+                $im = imagecreatefromjpeg($path);
+                foreach($texture as $t)
+                {
+                    $split = explode(",", $t);
+                    Database::Query('SELECT * FROM images WHERE id = "'.$split[0].'"');
+                    Database::Fetch_Assoc(NULL);
+                    file_put_contents('uploads/tmp.png', base64_decode(Database::$assoc['image_base64']));
+                    imagecopy($im, imagecreatefrompng('uploads/tmp.png'), $split[2] - 50, $split[1] - 50, 0, 0, imagesx(imagecreatefrompng('uploads/tmp.png')), imagesy(imagecreatefrompng('uploads/tmp.png')));
+                }
+                 imagepng($im, $path, 0);
+                 unlink("uploads/tmp.png");
+                 Database::Query('INSERT INTO gallery(image_path,author,like_img,dontlike_img,date_creation) VALUES("'.$path.'", "'.$_SESSION["email"].'", "0", "0", "'.date('Y-m-d H:i:s').'") ');
+                 print_message("Votre image a bien été sauvegarder !", "success");
+                }
+                else
+                {
+                      Database::Query('INSERT INTO gallery(image_path,author,like_img,dontlike_img,date_creation) VALUES("'.$path.'", "'.$_SESSION["email"].'", "0", "0", "'.date('Y-m-d H:i:s').'") ');
+                      print_message("Votre image a bien été sauvegarder !", "success");
+                }
+       }
+       else
+        print_message("Une erreur est survenue, merci de réessayer !", "error");
     }
 }
     if (!empty($_SESSION["email"]))
@@ -126,7 +129,7 @@ if (isset($_POST['save']))
                         while (Database::Fetch_Assoc(NULL))
                         {
                             echo '<div id="photo">
-                                     <img src="'.Database::$assoc['image_path'].'" height="190" width="200"/>
+                                     <a onclick="return(confirm(\'Voulez vous supprimer cette image ?\'));" href="?page=delete&id='.Database::$assoc["id"].'"><img src="'.Database::$assoc['image_path'].'" height="190" width="200"/></a>
                                   </div>';
                         }
                     }               

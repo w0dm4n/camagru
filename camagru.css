@@ -6,7 +6,7 @@ body {
 #Centre {
 	background-color: #FFF;
 	width: 1400px;
-	height: 1120px;
+	height: 1155px;
 	border: solid black 1px; 
 	border-radius: 3px;
 }
@@ -59,7 +59,7 @@ img[value="2"] {
 	height: 900px;
 	border: solid green 1px;
 }
-#video, #canvas, #galerie, .img_gal, .img_comment {
+#video, #canvas, #galerie, .img_gal, .img_comment, .comments, .SAMERELAPERIPAPETICIENNE2 {
 	border-radius: 3px;
 }
 #video {
@@ -164,7 +164,7 @@ li > ul {
 	display: inline-block;
 	position: absolute;
 	margin-top: -16px;
-	margin-left: -624px;
+	margin-left: -693px;
 }
 #galerie {
 	background-color: #FFF;
@@ -186,6 +186,34 @@ li > ul {
 	width: 700px;
 	height: 520px;
 }
+.comments {
+	background-color: white;
+	border: solid black 1px;
+	width: 900px;
+	height: 210px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+#SAMERELAPERIPAPETICIENNE {
+	margin-top: 3px;
+	margin-left: 3px;
+	float: left;
+	width: 875px;
+	height: 63px;
+	padding-left: 2px; 
+	text-align: left;
+}
+.SAMERELAPERIPAPETICIENNE2 {
+	background-color: #AFEEEE;
+	margin-left: 2px;
+	text-align: left;
+	border: solid black 1px;
+	width: 865px;
+	height: 40px;
+	padding-left: 2px; 
+	overflow-x: hidden;
+	overflow-y: scroll;  
+}
 @media screen and (max-width: 1400px) {
 	.useless img[value="1"] {
 		display: none;
@@ -199,7 +227,7 @@ li > ul {
 	}
 	#Centre {
 		width: 700px;
-		height: 1734px;
+		height: 1890px;
 		border: solid black 1px; 
 		border-radius: 3px;
 	}
@@ -208,7 +236,7 @@ li > ul {
 		float: none;
 		display: block;
 		width: 680px;
-		height: 600px;
+		height: 730px;
 		border: solid blue 1px;
 	}
 	#video {
@@ -216,7 +244,6 @@ li > ul {
 	}
 	.right {
 		width: 680px;
-		height: 900px;
 		border: solid red 1px;
 	}
 	.useless {
@@ -227,7 +254,7 @@ li > ul {
 	.middle, .middle_galerie{
 		border: solid black 1px;
 		width: 680px;
-		height: 1520px;
+		height: 1550px;
 	}
 	.middle_galerie {
 		overflow-x: hidden;
@@ -253,5 +280,31 @@ li > ul {
 	.img_comment {
 		width: 640px;
 		height: 480px;
+	}
+	.comments {
+		border: solid black 1px;
+		width: 640px;
+		height: 890px;
+		overflow-y: scroll;
+		overflow-x: hidden;
+	}
+	#SAMERELAPERIPAPETICIENNE {
+		margin-top: 3px;
+		margin-left: 3px;
+		float: left;
+		width: 610px;
+		height: 80px;
+		padding-left: 2px; 
+		text-align: left;
+	}
+	.SAMERELAPERIPAPETICIENNE2 {
+		margin-left: 2px;
+		text-align: left;
+		border: solid black 1px;
+		width: 600px;
+		height: 60px;
+		padding-left: 2px; 
+		overflow-x: hidden;
+		overflow-y: scroll;  
 	}
 }
