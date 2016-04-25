@@ -40,12 +40,31 @@
 		}
 		else
 		{
-			Database::Query('SELECT * FROM gallery ORDER BY date_creation DESC');
+			$trie = 1;
+			$article_max = 4;
+			if (isset($_GET['trie']))
+				$trie = intval($_GET['trie']);
+			Database::Query('SELECT * FROM gallery');
+			if (Database::Get_Rows(NULL))
+			{
+				$max_page = Database::$rows / $article_max;
+				if (($max_page - floor($max_page)) > 0.00)
+					$max_page++;
+			}
+			else
+				$max_page = 1;
+			if ($trie < 1 || $trie > $max_page)
+				$trie = 1;
+			$nbr = $article_max;
+			Database::Query('SELECT * FROM gallery ORDER BY date_creation DESC LIMIT '.(($trie * $article_max) - $article_max).','.($trie * $article_max).'');
 			if (Database::Get_Rows(NULL))
 			{
 				echo '<div class="middle_galerie">';
 				while (Database::Fetch_Assoc(NULL))
 				{
+					if ($nbr == 0)
+						break ;
+					$nbr--;
 					 echo '<div id="galerie">
 							<a href="?page=comment&id='.Database::$assoc["id"].'"><img class="img_gal" src="'.Database::$assoc["image_path"].'" /></a>
 							<form style="text-align: right; margin-right: 10px; margin-top: 6px;">
@@ -56,7 +75,25 @@
 						</div>';
 				}
 				echo '</div>';
-				echo '<br/><a href="">1</a> | <a href="">2</a>';
+				echo '<br/>';
+				echo '<div style="border-bottom: 4px solid #C3D825;"></div>';
+				if (($trie) > 1)
+					echo '<a style="padding: 4px 10px 6px;color: #000000;" href="index.php?page=gallery&trie=1">«</a>';
+				if (($trie - 3) <= floor($max_page) && ($trie - 3) > 0)
+					echo '<a style="padding: 4px 10px 6px;color: #000000;" href="index.php?page=gallery&trie='.($trie - 3).'">'.($trie - 3).'</a>';
+				if (($trie - 2) <= floor($max_page) && ($trie - 2) > 0)
+					echo '<a style="padding: 4px 10px 6px;color: #000000;" href="index.php?page=gallery&trie='.($trie - 2).'">'.($trie - 2).'</a>';
+				if (($trie - 1) <= floor($max_page) && ($trie - 1) > 0)
+					echo '<a style="padding: 4px 10px 6px;color: #000000;" href="index.php?page=gallery&trie='.($trie - 1).'">'.($trie - 1).'</a>';
+				echo '<a style="background-color: #C3D825;padding: 4px 10px 6px;color: #FFF;">'.$trie.'</a>';
+				if (($trie + 1) <= floor($max_page))
+					echo '<a style="padding: 4px 10px 6px;color: #000000;" href="index.php?page=gallery&trie='.($trie + 1).'">'.($trie + 1).'</a>';
+				if (($trie + 2) <= floor($max_page))
+					echo '<a style="padding: 4px 10px 6px;color: #000000;" href="index.php?page=gallery&trie='.($trie + 2).'">'.($trie + 2).'</a>';
+				if (($trie + 3) <= floor($max_page))
+					echo '<a style="padding: 4px 10px 6px;color: #000000;" href="index.php?page=gallery&trie='.($trie + 3).'">'.($trie + 3).'</a>';
+				if ($trie != floor($max_page))
+					echo '<a style="padding: 4px 10px 6px;color: #000000;" href="index.php?page=gallery&trie='.floor($max_page).'">»</a>';
 			}
 			else
 			{
