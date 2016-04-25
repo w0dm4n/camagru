@@ -15,11 +15,11 @@ function SendEmail($destination, $user, $action, $hash)
 			$path = explode("MyWebSite/", $path);
 			$str = NULL;
 			$i = 0;
-			while ($path[1][$i] != NULL && ($path[1][$i] != 'i' && $path[1][$i + 1] != 'n' && $path[1][$i + 2] != 'c'))
+			while ($path[1][$i] != NULL && ($path[1][$i] != '/'))
 				$str = ''.$str.''.$path[1][$i++].'';
 			$content = '<html>
 					Bonjour <i>'.$user.'</i>, 
-					<br/>Merci de cliquer sur <a href="http://localhost:8080/'.$str.'?page=validate&email='.base64_encode($email).'">ce lien</a> pour valider votre compte !
+					<br/>Merci de cliquer sur <a href="http://localhost:8080/'.$str.'/?page=validate&email='.base64_encode($email).'">ce lien</a> pour valider votre compte !
 					<br/>
 					A bientot sur <i>Camagru<i> !
 					</html>';
@@ -43,11 +43,11 @@ function SendEmail($destination, $user, $action, $hash)
 			$path = explode("MyWebSite/", $path);
 			$str = NULL;
 			$i = 0;
-			while ($path[1][$i] != NULL && ($path[1][$i] != 'i' && $path[1][$i + 1] != 'n' && $path[1][$i + 2] != 'c'))
+			while ($path[1][$i] != NULL && ($path[1][$i] != '/'))
 				$str = ''.$str.''.$path[1][$i++].'';
 			$content = '<html>
 					Bonjour <i>'.$user.'</i>, 
-					<br/>Merci de cliquer sur <a href="http://localhost:8080/'.$str.'?page=reset&hash='.$hash.'">ce lien</a> pour reinitialiser votre mot de passe !
+					<br/>Merci de cliquer sur <a href="http://localhost:8080/'.$str.'/?page=reset&hash='.$hash.'">ce lien</a> pour reinitialiser votre mot de passe !
 					<br/>
 					A bientot sur <i>Camagru<i> !
 					</html>';
@@ -71,7 +71,7 @@ function SendEmail($destination, $user, $action, $hash)
 			$path = explode("MyWebSite/", $path);
 			$str = NULL;
 			$i = 0;
-			while ($path[1][$i] != NULL && ($path[1][$i] != 'i' && $path[1][$i + 1] != 'n' && $path[1][$i + 2] != 'c'))
+			while ($path[1][$i] != NULL && ($path[1][$i] != '/'))
 				$str = ''.$str.''.$path[1][$i++].'';
 			$content = '<html>
 					Bonjour <i>'.$user.'</i>, 

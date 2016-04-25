@@ -1,0 +1,1 @@
+CREATE TABLE `reset` (`id` int(11) NOT NULL AUTO_INCREMENT, `email` varchar(255) NOT NULL, `hash` text NOT NULL, PRIMARY KEY (`id`));

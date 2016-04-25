@@ -1,5 +1,5 @@
 <?php
-	$DB_DSN = "mysql:dbname=sql7115810;host=sql7.freesqldatabase.com";
-	$DB_USER = "sql7115810";
-	$DB_PASSWORD = "nblTq47Bi2";
+	$DB_DSN = "mysql:dbname=sql7116802;host=sql7.freesqldatabase.com";
+	$DB_USER = "sql7116802";
+	$DB_PASSWORD = "VEuiMk5Fpx";
 ?>

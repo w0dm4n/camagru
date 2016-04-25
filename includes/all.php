@@ -19,7 +19,8 @@ Database::StartConnection($DB_DSN, $DB_USER, $DB_PASSWORD);
 	require_once("functions/send_email.php");
 	require_once("functions/randomKey.php");
 	require_once("functions/check_extension.php");
-/* FUNCTIONS */
+	require_once("functions/captcha.php");
+	/* FUNCTIONS */
 error_reporting(E_ALL);
 date_default_timezone_set('Europe/Paris');
 ?>

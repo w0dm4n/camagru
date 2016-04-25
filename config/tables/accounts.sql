@@ -1,0 +1,1 @@
+CREATE TABLE `accounts` (`id` int(11) NOT NULL AUTO_INCREMENT, `email` varchar(155) NOT NULL, `username` varchar(155) NOT NULL, `password` varchar(155) NOT NULL, `active` int(11) NOT NULL, PRIMARY KEY (`id`));

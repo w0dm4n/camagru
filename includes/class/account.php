@@ -3,80 +3,89 @@ class Account
 {
 	public static function Register()
 	{
-		if (!empty($_POST["email"]) && !empty($_POST["user"]) && !empty($_POST["password"]) && !empty($_POST["password_conf"]))
+		if (!empty($_POST["email"]) && !empty($_POST["user"]) && !empty($_POST["password"]) && !empty($_POST["password_conf"]) && !empty($_POST["robot"]))
 		{
 			$email = secure($_POST["email"], 1);
 			$user = secure($_POST["user"], 1);
 			$password = secure($_POST["password"], 1);
 			$password_conf = secure($_POST["password_conf"], 1);
-			if (filter_var($email, FILTER_VALIDATE_EMAIL))
+			$formrobot = secure($_POST["robot"], 0);
+			$roborep = secure($_SESSION["captcha_string"], 0);
+			if ($formrobot == $roborep)
 			{
-				if (strlen($user) >= 6)
+				if (filter_var($email, FILTER_VALIDATE_EMAIL))
 				{
-					if ($password == $password_conf)
+					if (strlen($user) >= 6)
 					{
-						if (strlen($password) >= 6)
+						if ($password == $password_conf)
 						{
-							if (!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $user))
+							if (strlen($password) >= 6)
 							{
-								if (!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $password))
+								if (!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $user))
 								{
-									Database::Query('SELECT * FROM accounts WHERE email = "'.$email.'"');
-									if (!Database::Get_Rows(NULL))
+									if (!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $password))
 									{
-										Database::Query('SELECT * FROM accounts WHERE username = "'.$user.'"');										
+										Database::Query('SELECT * FROM accounts WHERE email = "'.$email.'"');
 										if (!Database::Get_Rows(NULL))
 										{
-											Database::Query('INSERT INTO accounts(email,username,password,active) VALUES("'.$email.'", "'.$user.'", "'.hash('whirlpool', $password).'", "0")');
-											print_message("Votre compte a été crée avec succès, bienvenue sur <i>Camagru</i> !<br/>Pour utiliser votre compte, merci de cliquer sur le lien que nous venons de vous envoyer par e-mail.<br/> <small>(Vérifiez vos courriers indésirables !)</small>", "success");
-											SendEmail($email, $user, "validation", NULL);
+											Database::Query('SELECT * FROM accounts WHERE username = "'.$user.'"');										
+											if (!Database::Get_Rows(NULL))
+											{
+												Database::Query('INSERT INTO accounts(email,username,password,active) VALUES("'.$email.'", "'.$user.'", "'.hash('whirlpool', $password).'", "0")');
+												print_message("Votre compte a été crée avec succès, bienvenue sur <i>Camagru</i> !<br/>Pour utiliser votre compte, merci de cliquer sur le lien que nous venons de vous envoyer par e-mail.<br/> <small>(Vérifiez vos courriers indésirables !)</small>", "success");
+												SendEmail($email, $user, "validation", NULL);
+											}
+											else
+											{
+												print_message("Ce nom d'utilisateur est déjà pris, merci d'en choisir un autre !", "error");
+												redirect("register", 4);
+											}
 										}
 										else
 										{
-											print_message("Ce nom d'utilisateur est déjà pris, merci d'en choisir un autre !", "error");
+											print_message("Cette adresse e-mail est déjà prise, merci d'en choisir une autre !", "error");
 											redirect("register", 4);
 										}
 									}
 									else
 									{
-										print_message("Cette adresse e-mail est déjà prise, merci d'en choisir une autre !", "error");
+										print_message("Votre mot de passe ne doit pas contenir de caractère spéciaux !", "error");
 										redirect("register", 4);
 									}
 								}
 								else
 								{
-									print_message("Votre mot de passe ne doit pas contenir de caractère spéciaux !", "error");
+									print_message("Votre nom d'utilisateur ne doit pas contenir de caractère spéciaux !", "error");
 									redirect("register", 4);
 								}
 							}
 							else
 							{
-								print_message("Votre nom d'utilisateur ne doit pas contenir de caractère spéciaux !", "error");
+								print_message("Votre mot de passe doit faire au minimum 6 caractère !", "error");
 								redirect("register", 4);
 							}
 						}
 						else
 						{
-							print_message("Votre mot de passe doit faire au minimum 6 caractère !", "error");
+							print_message("Les deux mot de passe ne sont pas identique !", "error");
 							redirect("register", 4);
 						}
 					}
 					else
 					{
-						print_message("Les deux mot de passe ne sont pas identique !", "error");
+						print_message("Votre nom d'utilisateur doit faire au minimum 6 caractère !", "error");
 						redirect("register", 4);
 					}
 				}
 				else
 				{
-					print_message("Votre nom d'utilisateur doit faire au minimum 6 caractère !", "error");
+					print_message("Le format de votre email est incorrect !", "error");
 					redirect("register", 4);
 				}
 			}
 			else
 			{
-				print_message("Le format de votre email est incorrect !", "error");
-				redirect("register", 4);
+				print_message("Le captcha et incorrect !", "error");
 			}
 		}
 		else

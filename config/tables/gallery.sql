@@ -1,0 +1,1 @@
+CREATE TABLE `gallery` (`id` int(11) NOT NULL AUTO_INCREMENT, `image_path` text NOT NULL, `author` varchar(255) NOT NULL, `like_img` int(11) NOT NULL, `dontlike_img` int(11) NOT NULL, `date_creation` datetime NOT NULL, PRIMARY KEY (`id`));
